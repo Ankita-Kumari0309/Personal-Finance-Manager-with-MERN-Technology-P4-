@@ -107,7 +107,7 @@ const Login = () => {
                   name="email"
                   onChange={handleChange}
                   value={values.email}
-                  style={{ backgroundColor: "#2A2A40", color: "#FFD700", borderColor: "#FFD700" }}
+                  style={{ color: "white", backgroundColor: "transparent", borderColor: "white" }}
                 />
               </Form.Group>
 
@@ -119,7 +119,7 @@ const Login = () => {
                   placeholder="Password"
                   onChange={handleChange}
                   value={values.password}
-                  style={{ backgroundColor: "#2A2A40", color: "#FFD700", borderColor: "#FFD700" }}
+                  style={{ color: "white", backgroundColor: "transparent", borderColor: "white" }}
                 />
               </Form.Group>
 
