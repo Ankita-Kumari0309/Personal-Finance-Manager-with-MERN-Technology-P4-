@@ -1,0 +1,14 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* Light blue gradient */
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* Same as body */
+}
