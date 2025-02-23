@@ -9,25 +9,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loginAPI } from "../../utils/ApiRequest";
-import { Brightness4, Brightness7 } from "@mui/icons-material"; // Light/Dark Mode Icons
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
       navigate("/");
     }
-    document.body.className = theme; // Apply theme class to body
-  }, [navigate, theme]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+  }, [navigate]);
 
   const [values, setValues] = useState({
     email: "",
@@ -42,7 +34,7 @@ const Login = () => {
     pauseOnHover: false,
     draggable: true,
     progress: undefined,
-    theme: theme === "dark" ? "dark" : "light",
+    theme: "colored",
   };
 
   const handleChange = (e) => {
@@ -51,21 +43,21 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     const { email, password } = values;
-    try {
-      const { data } = await axios.post(loginAPI, { email, password });
-      if (data.success) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
-        toast.success(data.message, toastOptions);
-      } else {
-        toast.error(data.message, toastOptions);
-      }
-    } catch (error) {
-      toast.error("Login failed!", toastOptions);
+    setLoading(true);
+
+    const { data } = await axios.post(loginAPI, { email, password });
+
+    if (data.success === true) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/");
+      toast.success(data.message, toastOptions);
+      setLoading(false);
+    } else {
+      toast.error(data.message, toastOptions);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const particlesInit = useCallback(async (engine) => {
@@ -73,82 +65,84 @@ const Login = () => {
   }, []);
 
   return (
-    <div className={`login-container ${theme}`}>
+    <div style={{ position: "relative", overflow: "hidden", backgroundColor: "#1E1E2F" }}>
       <Particles
         id="tsparticles"
         init={particlesInit}
         options={{
-          background: {
-            color: { value: theme === "dark" ? "#000" : "#f0f0f0" },
-          },
+          background: { color: { value: "#1E1E2F" } },
           fpsLimit: 60,
           particles: {
-            number: { value: 200, density: { enable: true, value_area: 800 } },
-            color: { value: theme === "dark" ? "#ffcc00" : "#0000ff" },
+            number: { value: 150, density: { enable: true, value_area: 800 } },
+            color: { value: "#FFD700" },
             shape: { type: "circle" },
-            opacity: { value: 0.5, random: true },
+            opacity: { value: 0.4, random: true },
             size: { value: 3, random: { enable: true, minimumValue: 1 } },
             move: { enable: true, speed: 2 },
           },
           detectRetina: true,
         }}
+        style={{
+          position: "absolute",
+          zIndex: -1,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
       />
-      <Container className="mt-5">
+      <Container className="mt-5" style={{ position: "relative", zIndex: 2 }}>
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
-            <div className="theme-toggle">
-              <Button variant="outline-light" onClick={toggleTheme}>
-                {theme === "dark" ? <Brightness7 /> : <Brightness4 />}{" "}
-                {theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </Button>
-            </div>
-            <h1 className="text-center mt-4">
-              <AccountBalanceWalletIcon
-                sx={{ fontSize: 40, color: theme === "dark" ? "white" : "black" }}
-              />
+            <h1 className="text-center mt-5">
+              <AccountBalanceWalletIcon sx={{ fontSize: 40, color: "#FFD700" }} />
             </h1>
-            <h2 className={`text-center ${theme === "dark" ? "text-white" : "text-dark"}`}>
-              Login
-            </h2>
-            <Form onSubmit={handleSubmit}>
+            <h2 className="text-center" style={{ color: "#FFD700" }}>Login</h2>
+            <Form>
               <Form.Group controlId="formBasicEmail" className="mt-3">
-                <Form.Label className={theme === "dark" ? "text-white" : "text-dark"}>
-                  Email address
-                </Form.Label>
+                <Form.Label style={{ color: "#FFD700" }}>Email address</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
                   name="email"
                   onChange={handleChange}
                   value={values.email}
+                  style={{ backgroundColor: "#2A2A40", color: "#FFD700", borderColor: "#FFD700" }}
                 />
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword" className="mt-3">
-                <Form.Label className={theme === "dark" ? "text-white" : "text-dark"}>
-                  Password
-                </Form.Label>
+                <Form.Label style={{ color: "#FFD700" }}>Password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
                   placeholder="Password"
                   onChange={handleChange}
                   value={values.password}
+                  style={{ backgroundColor: "#2A2A40", color: "#FFD700", borderColor: "#FFD700" }}
                 />
               </Form.Group>
 
-              <div className="text-center mt-4">
-                <Link to="/forgotPassword" className={theme === "dark" ? "text-white" : "text-dark"}>
-                  Forgot Password?
-                </Link>
-                <Button type="submit" className="mt-3 btnStyle" disabled={loading}>
+              <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
+                <Link to="/forgotPassword" style={{ color: "#FFD700", textDecoration: "underline" }}>Forgot Password?</Link>
+
+                <Button
+                  type="submit"
+                  style={{
+                    backgroundColor: "#FFD700",
+                    color: "#1E1E2F",
+                    borderColor: "#FFD700",
+                    marginTop: "15px",
+                  }}
+                  onClick={!loading ? handleSubmit : null}
+                  disabled={loading}
+                >
                   {loading ? "Signing in…" : "Login"}
                 </Button>
-                <p className="mt-3" style={{ color: theme === "dark" ? "#9d9494" : "#555" }}>
+
+                <p className="mt-3" style={{ color: "#FFD700" }}>
                   Don't Have an Account?{" "}
-                  <Link to="/register" className={theme === "dark" ? "text-white" : "text-dark"}>
-                    Register
-                  </Link>
+                  <Link to="/register" style={{ color: "#FFD700", textDecoration: "underline" }}>Register</Link>
                 </p>
               </div>
             </Form>
