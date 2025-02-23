@@ -9,11 +9,11 @@ The Personal Finance Manager is a full-stack web application built using the MER
 
 This project was bootstrapped with Create React App.
 
-Frontend: React.js, 
+1. Frontend: React.js,
+   
+2. Backend: Node.js, Express.js
 
-Backend: Node.js, Express.js
-
-Database: MongoDB 
+3. Database: MongoDB 
 
 
 
@@ -22,8 +22,8 @@ Database: MongoDB
 
 Prerequisites
 
-Make sure you have the following installed:
+1. Make sure you have the following installed:
 
-Node.js (v14 or later)
+2. Node.js (v14 or later)
 
-MongoDB (local or cloud-based)
+3. MongoDB (local or cloud-based)
